@@ -3,16 +3,13 @@ package worldschematics.loot;
 import com.elmakers.mine.bukkit.api.magic.MageController;
 import com.elmakers.mine.bukkit.api.magic.MagicAPI;
 import com.elmakers.mine.bukkit.api.wand.Wand;
-import com.elmakers.mine.bukkit.magic.MagicController;
 import com.elmakers.mine.bukkit.magic.MagicPlugin;
-import com.shampaggon.crackshot.CSUtility;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.adapters.AbstractItemStack;
 import io.lumine.xikage.mythicmobs.adapters.bukkit.BukkitAdapter;
 import io.lumine.xikage.mythicmobs.items.MythicItem;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -142,7 +139,8 @@ public class LootItem {
 
             //set unbreakable or not
             if (Unbreakable == true) {
-                ItemData.spigot().setUnbreakable(true);
+                //ItemData.spigot().setUnbreakable(true);
+                ItemData.setUnbreakable(true);
             }
 
 
@@ -171,6 +169,7 @@ public class LootItem {
 
         }
 
+        /*
         if (Type == itemType.CRACKSHOTITEM) {
             //check if crackshot plugin is installed first
             if (WorldSchematics.getMythicMobsInstalled() == true) {
@@ -184,6 +183,8 @@ public class LootItem {
                 WorldSchematics.getInstance().getLogger().info("Tried to place CrackShot item in chest, but CrackShot is not installed!");
             }
         }
+        */
+
 
         if (Type == itemType.MYTHICMOBSITEM) {
             //check if MythicMobs plugin is installed first

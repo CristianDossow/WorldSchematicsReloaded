@@ -1,8 +1,6 @@
 package worldschematics.schematicBlock;
 
 import com.google.common.util.concurrent.AtomicDouble;
-import com.sk89q.worldedit.EmptyClipboardException;
-import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.world.DataException;
 import org.apache.commons.lang3.EnumUtils;
@@ -11,9 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.json.JSONException;
 import org.json.simple.parser.ParseException;
-import worldschematics.schematicBlock.AbstractSchematicBlock;
-import worldschematics.schematicBlock.schematicSpawner;
-import worldschematics.schematicManager;
+import worldschematics.SchematicManager;
 import worldschematics.util.DebugLogger;
 
 import java.io.IOException;
@@ -123,10 +119,10 @@ public class schematicMarker extends AbstractSchematicBlock {
 
 
                 if(rotation != -1){
-                    schematicManager.spawn(listSchematic, worldLocation, rotation, skipChecks);
+                    SchematicManager.spawn(listSchematic, worldLocation, rotation, skipChecks);
                     DebugLogger.log("Rotating schematic to: " + rotation, DebugLogger.DebugType.MARKER);
                 }else{
-                    schematicManager.spawn(listSchematic, worldLocation, skipChecks);
+                    SchematicManager.spawn(listSchematic, worldLocation, skipChecks);
                 }
 
             }

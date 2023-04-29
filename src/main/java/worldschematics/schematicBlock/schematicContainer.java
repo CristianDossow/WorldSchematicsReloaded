@@ -4,9 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.configuration.ConfigurationSection;
-import worldschematics.loot.LootTable;
-import worldschematics.schematicBlock.AbstractSchematicBlock;
 import worldschematics.util.DebugLogger;
+import worldschematics.loot.LootTable;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -20,7 +20,7 @@ place: ground
 #for something that you want to spawn very infrequently, similar to a village, 10.0 is recommended
 #for something very rare, 1 or 0.5 is recommended.
 #you may have to experiment to see what works best for you
-chance: 100.0
+chance: 10.0
 
 #offsets the paste position of the schematic in the x,y,z direction when spawned.
 #This can be used to adjust the schematics position.
@@ -36,20 +36,20 @@ minY: 1
 maxY: 256
 
 #whether to randomly rotate the schematic
-randomrotate: false
+randomRotate: false
 
 #sets whether the schematic will only spawn in certain biomes. If set to false, the schematic
 #will spawn in any biome
-restrictbiomes: false
+restrictBiomes: false
 
 #if 'restrictbiomes' is set to true, then the schematic will only spawn in these biomes
 #you can find a list of biome names here https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/block/Biome.html
-biomelist: 
+biomeList:
   - PLAINS
   - DESERT
 
 #turns the biome whitelist into a blacklists
-biomeblacklistmode: false
+biomeBlacklistMode: false
 
 #blacklist of blocks which the schematic will not spawn on
 #if WhiteListMode is set to true, then this acts as a whitelist instead
@@ -63,10 +63,10 @@ blacklist: []
 #  - STATIONARY_WATER
 
 #turns the block blacklist into a whitelist
-whitelistmode: false  
+whitelistMode: false
 
 #whether to paste air blocks from the schematic. If set to false, air blocks wont be pasted
-pasteair: true
+pasteAir: true
 
 #whether a WorldGuard region will be automatically created around the schematic when it is spawned, and any flags that will be set.
 #NOTE: This does not work yet

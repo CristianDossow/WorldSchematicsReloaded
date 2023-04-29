@@ -1,4 +1,5 @@
-package worldschematics.util;
+/*
+package src.worldschematics.util;
 
 import com.pg85.otg.BiomeIds;
 import com.pg85.otg.LocalBiome;
@@ -9,6 +10,7 @@ import worldschematics.WorldSchematics;
 import java.io.File;
 
 import static com.pg85.otg.OTG.getWorld;
+import static org.bukkit.Bukkit.getWorld;
 
 public class OtgUtils {
 
@@ -46,3 +48,4 @@ public class OtgUtils {
         }
     }
 }
+*/

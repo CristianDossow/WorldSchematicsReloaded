@@ -4,7 +4,6 @@ import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 import io.lumine.xikage.mythicmobs.spawning.spawners.MythicSpawner;
 import io.lumine.xikage.mythicmobs.spawning.spawners.SpawnerManager;
-import io.lumine.xikage.mythicmobs.util.types.RandomInt;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,7 +19,7 @@ import java.util.Random;
 /**
  * represents a spawner within a schematic. Will be depreciated with the introduction of the more versatile marker system
  */
-public class schematicSpawner extends worldschematics.schematicBlock.AbstractSchematicBlock {
+public class schematicSpawner extends AbstractSchematicBlock {
 
     ArrayList<String> mobsList = new ArrayList<>();
     spawnerType spawnType;

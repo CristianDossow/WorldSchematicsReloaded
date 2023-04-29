@@ -1,7 +1,6 @@
 package worldschematics;
 
 import com.sk89q.worldedit.*;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
@@ -12,17 +11,10 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.math.transform.AffineTransform;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.world.DataException;
 import com.sk89q.worldedit.world.block.BaseBlock;
 import com.sk89q.worldedit.world.block.BlockState;
 import com.sk89q.worldedit.world.block.BlockType;
 import com.sk89q.worldedit.world.block.BlockTypes;
-import com.sk89q.worldguard.bukkit.WGBukkit;
-import com.sk89q.worldguard.protection.flags.DefaultFlag;
-import com.sk89q.worldguard.protection.flags.Flag;
-import com.sk89q.worldguard.protection.flags.StateFlag;
-import com.sk89q.worldguard.protection.managers.RegionManager;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,7 +23,6 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.util.BlockVector;
 import org.json.JSONException;
 import org.json.simple.parser.ParseException;
 import worldschematics.schematicBlock.schematicContainer;
@@ -39,7 +30,6 @@ import worldschematics.schematicBlock.schematicMarker;
 import worldschematics.schematicBlock.schematicSpawner;
 import worldschematics.util.BruteForceDebug;
 import worldschematics.util.DebugLogger;
-import worldschematics.util.OtgUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -208,7 +198,7 @@ public class SpawnSchematic {
         try (ClipboardReader reader = format.getReader(new FileInputStream(SchematicFile))) {
             Clipboard clipboard = reader.read();
 
-            BiomesList = (ArrayList<String>) data.getList("biomelist");
+            BiomesList = (ArrayList<String>) data.getList("biomeList");
 
             DebugLogger.log("Spawning Schematic " + name + " at position: " + x + " " + y + " " + z, DebugLogger.DebugType.SCHEMATICSPAWNING);
 
@@ -268,9 +258,11 @@ public class SpawnSchematic {
                 String CurrentBiome = world.getBiome(x, z).name().toUpperCase();
 
                 //handle if this is an OTG biome
+                /*
                 if (OtgUtils.isOtgWorld(world)) {
                     CurrentBiome = OtgUtils.getBiomeName(world.getName(), x, z).toUpperCase();
                 }
+                */
 
 
                 DebugLogger.log("Checking biome of chunk. Biome is: " + CurrentBiome, DebugLogger.DebugType.SCHEMATICSPAWNING);
@@ -318,7 +310,6 @@ public class SpawnSchematic {
                     DebugLogger.log("Checking if block below schematic is " + MaterialName, DebugLogger.DebugType.SCHEMATICSPAWNING);
                     DebugLogger.log("Block below schematic location is " + b.getType().toString(), DebugLogger.DebugType.SCHEMATICSPAWNING);
                     if (b.getType().toString().equals(MaterialName)) {
-
                         DebugLogger.log("Blocks below schematic match block on list", DebugLogger.DebugType.SCHEMATICSPAWNING);
                         DoesBlockMatchList = true;
                     }
@@ -348,9 +339,9 @@ public class SpawnSchematic {
             }
 
 
-            if (BiomeCheck == true && HeightCheck == true && SpawnLimitCheck == true && BlockCheck == true || SkipChecks == true) {
+            if (BiomeCheck && HeightCheck && SpawnLimitCheck && BlockCheck || SkipChecks) {
 
-                if (WorldSchematics.getShowLocation() == true) {
+                if (WorldSchematics.getShowLocation()) {
                     WorldSchematics.getInstance().getLogger().info("Schematic passed all checks. Spawned schematic at: " + x + " " + y + " " + z);
                 }
 
@@ -377,7 +368,7 @@ public class SpawnSchematic {
                     Operation operation = holder
                             .createPaste(editSession)
                             .to(BlockVector3.at(x, y, z))
-                            .ignoreAirBlocks(false)
+                            .ignoreAirBlocks(!pasteair)
                             .build();
                     Operations.complete(operation);
                 }
@@ -437,10 +428,10 @@ public class SpawnSchematic {
 
         DebugLogger.log("Name: " + this.name, DebugLogger.DebugType.SCHEMATICINFO);
 
-        pasteair = data.getBoolean("pasteair", false);
+        pasteair = data.getBoolean("pasteAir", false);
         place = data.getString("place", "ground");
 
-        restrictbiomes = data.getBoolean("restrictbiomes", false);
+        restrictbiomes = data.getBoolean("restrictBiomes", false);
 
         basementdepth = data.getInt("HeightAdjustment", 0);
         anywhereminY = data.getInt("minY", 60);
@@ -453,13 +444,13 @@ public class SpawnSchematic {
 
         BlockBlacklist = (ArrayList<String>) data.getList("blacklist");
 
-        BiomesList = (ArrayList<String>) data.getList("biomelist");
+        BiomesList = (ArrayList<String>) data.getList("biomeList");
 
-        biomeblacklistmode = data.getBoolean("biomeblacklistmode", false);
+        biomeblacklistmode = data.getBoolean("biomeBlacklistMode", false);
 
-        whitelistmode = data.getBoolean("whitelistmode", false);
+        whitelistmode = data.getBoolean("whitelistMode", false);
 
-        randomrotate = data.getBoolean("randomrotate", true);
+        randomrotate = data.getBoolean("randomRotate", true);
 
         ChanceOfSpawn = data.getDouble("chance", 100);
 

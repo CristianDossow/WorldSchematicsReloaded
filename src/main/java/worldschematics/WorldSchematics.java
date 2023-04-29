@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.simple.parser.ParseException;
 import worldschematics.util.DebugLogger;
 
+
 import java.io.*;
 
 public class WorldSchematics extends JavaPlugin implements Listener {
@@ -47,7 +48,7 @@ public class WorldSchematics extends JavaPlugin implements Listener {
 
     private static Boolean MythicMobsLoaded = false;
 
-    private schematicManager sm;
+    public SchematicManager sm;
 
     private static File baseServerDir;
 
@@ -71,7 +72,7 @@ public class WorldSchematics extends JavaPlugin implements Listener {
 
         //Start the schematicManager
         try {
-            sm = new schematicManager(this);
+            sm = new SchematicManager(this);
         } catch (DataException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -292,11 +293,12 @@ public class WorldSchematics extends JavaPlugin implements Listener {
     // handles commands typed in game
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)  throws JSONException {
-        Boolean IsPlayer = false;
+        boolean IsPlayer = false;
         Player player = null;
         if ((sender instanceof Player)) {
             player = (Player) sender;
             IsPlayer = true;
+
         }
 
         if (cmd.getName().equalsIgnoreCase("worldschematics") || cmd.getName().equalsIgnoreCase("worldschematics2")) {
@@ -397,7 +399,7 @@ public class WorldSchematics extends JavaPlugin implements Listener {
 
 
                     try {
-                        schematicManager.spawn(shcemticsName,spawnPos);
+                        SchematicManager.spawn(shcemticsName,spawnPos);
                     } catch (EmptyClipboardException e) {
                         e.printStackTrace();
                     } catch (com.sk89q.worldedit.world.DataException e) {

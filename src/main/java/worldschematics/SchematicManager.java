@@ -1,7 +1,5 @@
 package worldschematics;
 
-import com.sk89q.worldedit.EmptyClipboardException;
-import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.world.DataException;
 import org.apache.commons.io.FilenameUtils;
@@ -14,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkPopulateEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
-import org.json.JSONException;
 import org.json.simple.parser.ParseException;
 import worldschematics.util.DebugLogger;
 
@@ -23,16 +20,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static worldschematics.WorldSchematics.PluginFolder;
+import static worldschematics.WorldSchematics.isSpawnSchematicsOn;
+
 //Will handle loading schematics into memory, as well as spawning them in the world when the CHunklistener loads a chunk
 //And determining if the schematic meets the conditions needed to be placed
-public class schematicManager implements Listener {
+public class SchematicManager implements Listener {
 
     WorldSchematics plugin;
     private static ArrayList<SpawnSchematic> Schematics = new ArrayList<SpawnSchematic>();
     private static ArrayList<World> LoadedWorlds = new ArrayList<>();
 
 
-    schematicManager(WorldSchematics core) throws DataException, ParseException, IOException {
+    SchematicManager(WorldSchematics core) throws DataException, ParseException, IOException {
         plugin = core;
         //LoadedWorlds = (ArrayList<World>) plugin.getServer().getWorlds();
         plugin.getLogger().info("Initializing Schematic Manager");
@@ -56,7 +56,7 @@ public class schematicManager implements Listener {
     }
 
     public void loadWorld(World world) throws DataException, ParseException, IOException {
-        File WorldFolder = new File(WorldSchematics.PluginFolder + "/Schematics/" + world.getName());
+        File WorldFolder = new File(PluginFolder + "/Schematics/" + world.getName());
         if (!WorldFolder.exists()) {
             plugin.getLogger().info("Folder for " + world.getName() + " doesnt exist, creating folder");
             WorldFolder.mkdirs();
@@ -117,7 +117,7 @@ public class schematicManager implements Listener {
 
     private void loadSchematics(World world) throws DataException, IOException, ParseException {
         DebugLogger.log("Loading Schematics from world " + world.getName() + " into memory");
-        File worldPath = new File(WorldSchematics.PluginFolder + "/Schematics/" + world.getName());
+        File worldPath = new File(PluginFolder + "/Schematics/" + world.getName());
         File[] directoryListing = worldPath.listFiles();
 
         for (File child : directoryListing) {
@@ -150,7 +150,7 @@ public class schematicManager implements Listener {
     }
 
     //reloads all schematics
-    void reloadSchematics() throws IOException, DataException,  ParseException {
+    public void reloadSchematics() throws IOException, DataException,  ParseException {
         clearSchematics();
         for (World w : LoadedWorlds) {
             loadSchematics(w);
@@ -206,7 +206,7 @@ public class schematicManager implements Listener {
         //SpawnSchematic sCopy = new SpawnSchematic(schematic);
 
         //may cause lag, will need to test to see if it still reads file from disk each time
-        if (WorldSchematics.isSpawnSchematicsOn() && schematic.isEnabled()) {
+        if (isSpawnSchematicsOn() && schematic.isEnabled()) {
             schematic.spawn(world, PastePosX, PastePosY, PastePosZ);
         }
 
@@ -217,7 +217,7 @@ public class schematicManager implements Listener {
 
         //may cause lag, will need to test to see if it still reads file from disk each time
         if (schematic != null) {
-            if (WorldSchematics.isSpawnSchematicsOn()) {
+            if (isSpawnSchematicsOn()) {
                 schematic.spawn(location);
             }
         } else {
@@ -239,7 +239,7 @@ public class schematicManager implements Listener {
 
         //may cause lag, will need to test to see if it still reads file from disk each time
         if (sCopy != null) {
-            if (WorldSchematics.isSpawnSchematicsOn()) {
+            if (isSpawnSchematicsOn()) {
                 sCopy.spawn(location,rotation,skipChecks);
             }
         } else {
